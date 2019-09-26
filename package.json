@@ -10,7 +10,9 @@
   "author": "Edwin Salgado",
   "license": "ISC",
   "dependencies": {
-    "graphql-yoga": "^1.18.3"
+    "dotenv": "^8.1.0",
+    "graphql-yoga": "^1.18.3",
+    "mongoose": "^5.7.1"
   },
   "devDependencies": {
     "nodemon": "^1.19.2"

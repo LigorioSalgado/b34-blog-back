@@ -1,4 +1,13 @@
+require('dotenv').config();
 const { GraphQLServer } = require('graphql-yoga');
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URL,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology: true});
+
+const mongo =  mongoose.connection;
+
+mongo.on('error', (error) => console.log(error))
+    .once('open',() => console.log('Connected to database'));
 
 const typeDefs = `
 
@@ -18,10 +27,10 @@ const typeDefs = `
         age:Int!
     }
    
-`// La definición de como van a ser recibidos y enviados los 
+`;// La definición de como van a ser recibidos y enviados los 
 //datos
 
-const users = []
+const users = [];
 
 const resolvers = {
     Query:{
@@ -31,17 +40,17 @@ const resolvers = {
     },
     Mutation:{
         createUser:(root,params,context,info) => {
-            const user  = {id:users.length+1,name:params.name,age:params.age}
-            users.push(user)
+            const user  = {id:users.length+1,name:params.name,age:params.age};
+            users.push(user);
             return user;
         },
     }
-}
+};
 //root -> trae la info del servidor de Graphql
 //params -> son los datos que envia el cliente y estan definidos en el typeDefs
 //context -> objeto por el cual se comunican todos los resolvers(Auth)
 //info -> El query que se ejecuto en el cliente
 
-const server = new GraphQLServer({typeDefs, resolvers})//schema de graphql
+const server = new GraphQLServer({typeDefs, resolvers});//schema de graphql
 
-server.start(() => console.log("Works in port 4000 :)"))
+server.start(() => console.log('Works in port 4000 :)'));
