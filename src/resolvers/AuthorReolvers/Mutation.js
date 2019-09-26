@@ -6,6 +6,6 @@ const createNewAuthor = async(_,params) => {
     return author;
 };
 
-module.exports - {
+module.exports = {
     createNewAuthor
 };
