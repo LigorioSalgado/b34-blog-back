@@ -2,6 +2,7 @@ const { getAllAuthors, getOneAuthor } = require('../../services/AuthorService');
 
 const getAuthors = async() => {
     const authors = await getAllAuthors();
+    console.log(authors);
     return authors;
 // return getAllAuthors().then(authors => authors)
 //                       .catch((e) => {throw new Error(e)})

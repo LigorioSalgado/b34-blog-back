@@ -4,12 +4,41 @@ scalar URL
 type Query {
     getAuthors:[Author]!
     getSingleAuthor(id:ID!):Author!
+    getPosts:[Post]!
+    getOnePost(id:ID!):Post!
 }
 
 type Mutation{
     createNewAuthor(data:AuthorInput!):Author!
     updateOneAuthor(id:ID!,data:AuthorUpdateInput!):Author!
     deleteOneAuthor(id:ID!):String!
+    createNewPost(data:PostInput!):Post!
+    updateOnePost(id:ID!,data:PostUpdateInput!):Post!
+    deleteOnePost(id:ID!):String!
+}
+
+type Post{
+    _id:ID!
+    title:String!
+    content:String!
+    author:Author! #Aqui regresa todo el objeto
+    cover:URL!    
+    liked_by:[Author]!
+}
+
+input PostInput {
+    title:String!
+    content:String!
+    author:String! #Aqui solo va el ID
+    cover:URL
+}
+
+input PostUpdateInput{
+    title:String
+    content:String
+    cover:URL
+    liked_by:String
+    is_active:Boolean
 }
 
 type Author{
@@ -20,6 +49,7 @@ type Author{
     birth_date:String!
     gender:GENDERS
     profile_pic:URL!
+    posts:[Post]!
 }
 
 input AuthorInput {
