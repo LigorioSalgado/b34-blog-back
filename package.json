@@ -10,9 +10,11 @@
   "author": "Edwin Salgado",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "dotenv": "^8.1.0",
     "graphql-scalars": "^1.0.1",
     "graphql-yoga": "^1.18.3",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.1"
   },
   "devDependencies": {
