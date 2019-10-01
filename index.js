@@ -1,8 +1,11 @@
 require('dotenv').config();
 const { GraphQLServer } = require('graphql-yoga');
 const { importSchema } = require('graphql-import');
-const resolvers = require('./src/resolvers');
+const { makeExecutableSchema } = require('graphql-tools');
 const mongoose = require('mongoose');
+const resolvers = require('./src/resolvers');
+const AuthDirective = require('./src/resolvers/Directives/AuthDirective');
+const verifyToken = require('./src/utils/verifyToken');
 
 mongoose.connect(process.env.MONGO_URL,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology: true});
 
@@ -54,6 +57,18 @@ const typeDefs = importSchema(__dirname + '/schema.graphql');
 //context -> objeto por el cual se comunican todos los resolvers(Auth)
 //info -> El query que se ejecuto en el cliente
 
-const server = new GraphQLServer({typeDefs, resolvers});//schema de graphql
+const schema = makeExecutableSchema({
+    typeDefs,
+    resolvers,
+    schemaDirectives:{
+        auth:AuthDirective
+    }
+});
+
+
+const server = new GraphQLServer({
+    schema,
+    context: async ({request}) => verifyToken(request)
+});//schema de graphql
 
 server.start(() => console.log('Works in port 4000 :)'));

@@ -12,9 +12,9 @@ const createPost = async(data) => {
     return populatedPost;
 };
 
-const updatePost = (id,data) => Posts.findOneAndUpdate({_id:id},{...data},{new:true}).populate('author');
+const updatePost = (id,data,author) => Posts.findOneAndUpdate({_id:id,author},{...data},{new:true}).populate('author');
 
-const deletePost = (id) => Posts.findOneAndUpdate({_id:id,is_active:true},{is_active:false});
+const deletePost = (id,author) => Posts.findOneAndUpdate({_id:id,is_active:true,author},{is_active:false});
 
 
 module.exports = {

@@ -8,7 +8,10 @@ const getAllAuthors = () => Authors.find({is_active:true}).populate({
     model:'posts'
 });
 
-const getOneAuthor = (id) => Authors.findOne({_id:id,is_active:true}).populate('posts');
+const getOneAuthor = (id) => Authors.findOne({_id:id,is_active:true}).populate({
+    path:'posts',
+    model:'posts'
+});
 
 const getAuthorByEmail = (email) => Authors.findOne({email,is_active:true});
 

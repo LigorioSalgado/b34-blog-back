@@ -1,20 +1,22 @@
 scalar EmailAddress
 scalar URL
+directive @auth on FIELD_DEFINITION | FIELD
 
 type Query {
     getAuthors:[Author]!
     getSingleAuthor(id:ID!):Author!
     getPosts:[Post]!
     getOnePost(id:ID!):Post!
+    me:Author!@auth
 }
 
 type Mutation{
     createNewAuthor(data:AuthorInput!):Author!
-    updateOneAuthor(id:ID!,data:AuthorUpdateInput!):Author!
-    deleteOneAuthor(id:ID!):String!
-    createNewPost(data:PostInput!):Post!
-    updateOnePost(id:ID!,data:PostUpdateInput!):Post!
-    deleteOnePost(id:ID!):String!
+    updateOneAuthor(id:ID!,data:AuthorUpdateInput!):Author!@auth
+    deleteOneAuthor(id:ID!):String!@auth
+    createNewPost(data:PostInput!):Post!@auth
+    updateOnePost(id:ID!,data:PostUpdateInput!):Post!@auth
+    deleteOnePost(id:ID!):String!@auth
     login(email:EmailAddress!,password:String):Auth!
 }
 
@@ -35,7 +37,7 @@ type Post{
 input PostInput {
     title:String!
     content:String!
-    author:String! #Aqui solo va el ID
+    #author:String! #Aqui solo va el ID
     cover:URL
 }
 
