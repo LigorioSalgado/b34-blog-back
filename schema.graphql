@@ -1,5 +1,6 @@
 scalar EmailAddress
 scalar URL
+scalar Upload
 directive @auth on FIELD_DEFINITION | FIELD
 
 type Query {
@@ -38,13 +39,13 @@ input PostInput {
     title:String!
     content:String!
     #author:String! #Aqui solo va el ID
-    cover:URL
+    cover:Upload
 }
 
 input PostUpdateInput{
     title:String
     content:String
-    cover:URL
+    cover:Upload
     liked_by:String
     is_active:Boolean
 }
