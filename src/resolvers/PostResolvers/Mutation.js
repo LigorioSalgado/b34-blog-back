@@ -11,7 +11,6 @@ const createNewPost =  async(_,{data},{user}) => {
         const { createReadStream }  = await data.cover;
         const stream = createReadStream();
         const image = await storage({ stream });
-        console.log(image);
         data = {...data,cover:image.url};
     }
     const post = await createPost(data);

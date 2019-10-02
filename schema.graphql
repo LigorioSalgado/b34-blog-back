@@ -31,7 +31,7 @@ type Post{
     title:String!
     content:String!
     author:Author! #Aqui regresa todo el objeto
-    cover:URL!    
+    cover:URL  
     liked_by:[Author]!
 }
 
