@@ -3,7 +3,7 @@ const storage = require('../../utils/storage');
 //const { getOneAuthor } = require('../../services/AuthorService'); 
 
 
-const createNewPost =  async(_,{data},{user}) => {
+const createNewPost =  async(_,{data},{user,pubsub}) => {
     data.author = user._id;
     // Temporal solution
     //const author = await getOneAuthor(params.data.author);
@@ -16,6 +16,12 @@ const createNewPost =  async(_,{data},{user}) => {
     const post = await createPost(data);
     user.posts.push(post._id);
     user.save();
+    pubsub.publish('post', {
+        post:{
+            mutation: 'CREATED',
+            data: post
+        }
+    })  ;
     return post;
 };
 
