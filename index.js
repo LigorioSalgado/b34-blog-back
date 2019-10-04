@@ -66,12 +66,13 @@ const schema = makeExecutableSchema({
     }
 });
 
+const port = process.env.PORT || 4000;
 
 const server = new GraphQLServer({
     schema,
     context: async ({request}) => verifyToken(request)
 });//schema de graphql
 
-server.start(() => console.log('Works in port 4000 :)'));
+server.start({port},() => console.log('Works in port 4000 :)'));
 
 module.exports = { schema };
