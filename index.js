@@ -7,7 +7,8 @@ const resolvers = require('./src/resolvers');
 const AuthDirective = require('./src/resolvers/Directives/AuthDirective');
 const verifyToken = require('./src/utils/verifyToken');
 
-mongoose.connect(process.env.MONGO_URL,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology: true});
+const MONGO_URI = process.env.NODE_ENV == 'test' ? process.env.MONGO_TEST_URL : process.env.MONGO_URL;
+mongoose.connect(MONGO_URI,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology: true});
 
 const mongo =  mongoose.connection;
 
@@ -72,3 +73,5 @@ const server = new GraphQLServer({
 });//schema de graphql
 
 server.start(() => console.log('Works in port 4000 :)'));
+
+module.exports = { schema };
