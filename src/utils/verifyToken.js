@@ -12,9 +12,11 @@ const verifyToken = async req => {
             const user = await getAuthorByEmail(payload.email);
             if (!user) return req;
             //req.user = user;
-            req = { ...req, user };
+            //req = { ...req, user };
+            return user;
+        }else{
+            return {};
         }
-        return req;
     } catch (e) {
         throw new Error(e.message);
     }
